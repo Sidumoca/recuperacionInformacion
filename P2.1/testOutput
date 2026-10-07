@@ -1,0 +1,38 @@
+1	17-natura2k
+1	12-ign-fr-3 http://www.ign.fr
+1	13-AEAG-7 http://data.eau-adour-garonne.fr http://www.eaufrance.fr
+1	14-DIREN-1
+1	15-SMEAG-1 http://www.garona-i-garonne.com http://www.garona-i-garonne.com/Territoire_71_3_3.php?pk_langue=3&id_page=71 http://www.smeag.fr
+1	16-nuts http://geoportal.jrc.it/wmsconnector/WMSProxyServlet/JRC_GISCO_NUTS http://geoportal.jrc.it/wmsconnector/WMSProxyServlet/JRC_GISCO_COMMUNES
+1	18-eurographics-1
+1	19-DMA-CHE-1 //Esco (Ipa.cps.unizar.es)
+1	20-IDE-GV-1
+1	21-CLC2000_aragon
+1	23-img2k_2 ftp://ftplmu.jrc.it/outgoing/Image2000
+1	24-USGS-BULLETIN-1 http://greenwood.cr.usgs.gov/pub/bulletins/b2064-a/hailey.tar
+1	25-USGS-DIGITAL-170
+1	26-USGS-MINERAL-247
+1	27-USGS-REPORTS-751
+1	28-USGS-PROVISIONAL-1008
+1	29-IDENA-AG-1 http://www.cfnavarra.es/agricultura
+1	30-IDENA-S-1 http://www.cfnavarra.es/salud
+2	12-ign-fr-3 http://www.ign.fr
+2	13-AEAG-7 http://data.eau-adour-garonne.fr http://www.eaufrance.fr
+2	14-DIREN-1
+2	15-SMEAG-1 http://www.garona-i-garonne.com http://www.garona-i-garonne.com/Territoire_71_3_3.php?pk_langue=3&id_page=71 http://www.smeag.fr
+2	16-nuts http://geoportal.jrc.it/wmsconnector/WMSProxyServlet/JRC_GISCO_NUTS http://geoportal.jrc.it/wmsconnector/WMSProxyServlet/JRC_GISCO_COMMUNES
+2	17-natura2k
+2	18-eurographics-1
+2	19-DMA-CHE-1 //Esco (Ipa.cps.unizar.es)
+2	20-IDE-GV-1
+2	21-CLC2000_aragon
+2	23-img2k_2 ftp://ftplmu.jrc.it/outgoing/Image2000
+2	24-USGS-BULLETIN-1 http://greenwood.cr.usgs.gov/pub/bulletins/b2064-a/hailey.tar
+2	25-USGS-DIGITAL-170
+2	26-USGS-MINERAL-247
+2	27-USGS-REPORTS-751
+2	28-USGS-PROVISIONAL-1008
+2	29-IDENA-AG-1 http://www.cfnavarra.es/agricultura
+2	30-IDENA-S-1 http://www.cfnavarra.es/salud
+2	01-mtn25
+2	05-mtn50
