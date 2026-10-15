@@ -57,8 +57,8 @@ class MyIndex:
             defenseYear=ID(stored=True),
             description=TEXT(analyzer=analyzer),
             subject=TEXT(analyzer=analyzer),
-            type=TEXT(analyzer=analyzer)
-            language=TEXT(analyzer=analyzer)
+            type=ID(stored=True),
+            language=ID(stored=True)
         )
         create_folder(index_folder)
         index = create_in(index_folder, schema)
@@ -99,6 +99,13 @@ class MyIndex:
             texts = [elem.text.strip() for elem in elements if elem.text]
             return ' '.join(texts)
 
+        def get_first_tag_text(tag_name):
+            elements = root.findall(f'.//{{*}}{tag_name}')
+            for element in elements:
+                if element.text and element.text.strip():
+                    return element.text.strip()
+            return ''
+
         title_text = get_tag_text('title')
         autor_text = get_tag_text('creator')
         description_text = get_tag_text('description')
@@ -110,9 +117,10 @@ class MyIndex:
         year_text = match.group(0) if match else ''
 
         subject_text = get_tag_text('subject')
-        identifier_text = get_tag_text('identifier')
+        identifier_text = get_first_tag_text('identifier')
         type_text = get_tag_text('type')
-        language_text = get_tag_text('language')
+        # si hay varios idiomas, se pone el primero
+        language_text = get_first_tag_text('language')
             
         self.writer.add_document(
             path=filename,
@@ -143,5 +151,3 @@ if __name__ == '__main__':
 
     my_index = MyIndex(index_folder)
     my_index.index_docs(docs_folder)
-
-

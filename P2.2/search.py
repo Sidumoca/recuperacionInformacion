@@ -15,7 +15,7 @@ import spacy
 from whoosh.qparser import QueryParser
 from whoosh.qparser import OrGroup
 from whoosh.qparser import MultifieldParser
-from whoosh.query import And, NumericRange, Or, Term, TermRange
+from whoosh.query import Or, Term, TermRange
 from whoosh import scoring
 import whoosh.index as index
 from nltk.stem.snowball import SnowballStemmer
@@ -23,16 +23,22 @@ from whoosh.analysis import Filter
 
 import xml.etree.ElementTree as ET
 
+try:
+    nlp = spacy.load('es_core_news_sm')
+except OSError as exc:
+    raise RuntimeError(
+        "No se puede cargar el modelo de spaCy 'es_core_news_sm'. "
+        "Instálalo antes de ejecutar la búsqueda."
+    ) from exc
+
 ACADEMIC_TYPES = ['TAZ-TFG', 'TAZ-TFM', 'TAZ-PFC', 'TESIS']
 LANGUAGE_CODES = {
-    'español': 'spa',
-    'castellano': 'spa',
-    'english': 'eng',
-    'inglés': 'eng',
-    'ingles': 'eng',
+    'español': ('es', 'spa'),
+    'castellano': ('es', 'spa'),
+    'english': ('en', 'eng'),
+    'inglés': ('en', 'eng'),
+    'ingles': ('en', 'eng'),
 }
-
-
 def extract_information_needs(query_text):
     info = {
         'persons': [],
@@ -40,6 +46,7 @@ def extract_information_needs(query_text):
         'years': [],
         'language': [],
         'types': [],
+        'subjects': [],
         'clean_text': query_text
     }
 
@@ -69,9 +76,11 @@ def extract_information_needs(query_text):
     language_regex = r'\b(?:español|castellano|english|inglés|ingles)\b'
     language_match = re.findall(language_regex, query_text, flags=re.IGNORECASE)
     if language_match:
-        info['language'] = list({
-            LANGUAGE_CODES[language.lower()] for language in language_match
-        })
+        info['language'] = list(dict.fromkeys(
+            code
+            for language in language_match
+            for code in LANGUAGE_CODES[language.lower()]
+        ))
         info['clean_text'] = re.sub(language_regex, '', info['clean_text'], flags=re.IGNORECASE)
 
     # deteccion del tipo de trabajo del repositorio
@@ -80,25 +89,67 @@ def extract_information_needs(query_text):
         (r'\btesis\b', ['TESIS']),
         (r'\btrabajos?\s+acad[eé]micos?\b', ACADEMIC_TYPES),
     ]
+    specific_type_found = False
     for type_regex, types in type_patterns:
         if re.search(type_regex, query_text, flags=re.IGNORECASE):
+            specific_type_found = True
             info['types'].extend(types)
             info['clean_text'] = re.sub(
                 type_regex, '', info['clean_text'], flags=re.IGNORECASE
             )
+    if not specific_type_found and re.search(
+        r'\btrabajos?\b', query_text, flags=re.IGNORECASE
+    ):
+        info['types'].extend(ACADEMIC_TYPES)
+        info['clean_text'] = re.sub(
+            r'\btrabajos?\b', '', info['clean_text'], flags=re.IGNORECASE
+        )
     info['types'] = list(dict.fromkeys(info['types']))
 
+    # deteccion de siglos que suelen aparecer como subject
+    century_regex = r'\bsiglo\s+(?:[IVXLCDM]+|\d+)\b'
+    info['subjects'].extend(
+        match.strip()
+        for match in re.findall(century_regex, query_text, flags=re.IGNORECASE)
+    )
+    info['clean_text'] = re.sub(
+        century_regex, '', info['clean_text'], flags=re.IGNORECASE
+    )
+    info['subjects'] = list(dict.fromkeys(info['subjects']))
 
-    #entidades nombradas del spaCy
+    #departamentos buscados manualmente
+    department_regex = (
+        r'\bdepartamento\s+de\s+[^,.!?;:]+?'
+        r'(?=\s+(?:sobre|acerca|relacionad\w*|en|para|con|del)\b|[,.!?;:]|$)'
+    )
+    departments = re.findall(
+        department_regex, info['clean_text'], flags=re.IGNORECASE
+    )
+    info['orgs'].extend(department.strip() for department in departments)
+    info['clean_text'] = re.sub(
+        department_regex, '', info['clean_text'], flags=re.IGNORECASE
+    )
+
+    #entidades de spacy: las localizaciones se buscan en subject.
     doc = nlp(info['clean_text'])
     for ent in doc.ents:
         if ent.label_ == 'PER':
             info['persons'].append(ent.text.strip())
+            print(f'Persona detectada: {ent.text.strip()}') #TODO: esto para debug. mirar que imprime y quizas no borrar de clean text y que se procese en ambos sitios
         elif ent.label_ == 'ORG':
             info['orgs'].append(ent.text.strip())
+            print(f'Organizacion detectada: {ent.text.strip()}')
+        elif ent.label_ in ('GPE', 'LOC'):
+            subject = ent.text.strip()
+            if subject.lower() in ('zaragoza', 'saragossa'):
+                info['subjects'].extend(['Zaragoza', 'Saragossa'])
+            else:
+                info['subjects'].append(subject)
+            info['clean_text'] = info['clean_text'].replace(ent.text, ' ')
     #ahora quito estos bichos del texto
     for ent_text in info['persons'] + info['orgs']:
         info['clean_text'] = info['clean_text'].replace(ent_text, ' ')
+    info['subjects'] = list(dict.fromkeys(info['subjects']))
 
     #limpieza general por lo visto
     info['clean_text'] = re.sub(r'\s+', ' ', info['clean_text']).strip()
@@ -107,35 +158,55 @@ def extract_information_needs(query_text):
  
 def build_query(schema, extracted_info):
     clauses = []
+
+    def boosted(query, boost):
+        query.boost = boost
+        return query
     
     #autor o director
     for person in extracted_info['persons']:
         parser_autor = QueryParser("autor", schema)
         parser_director = QueryParser("director", schema)
         q_person = Or([parser_autor.parse(person), parser_director.parse(person)])
-        clauses.append(q_person)
+        clauses.append(boosted(q_person, 4.0))
         
-    #departamento (organizaciones) #TODO: probablemente falte meter cosas a departamento. no creo que orgs pille bien los departamentos ns
+    #departamento (organizaciones)
     for org in extracted_info['orgs']:
-        parser_dep = QueryParser("departamento", schema)
-        clauses.append(parser_dep.parse(org))
+        parser_dep = QueryParser("departamento", schema) #TODO: quizas poner que sea or y no and? no se si se puede
+        clauses.append(boosted(parser_dep.parse(org), 4.0))
         
     #años
     years = extracted_info['years']
     if len(years) == 1:
-        clauses.append(Term("defenseYear", years[0]))
+        clauses.append(boosted(Term("defenseYear", years[0]), 3.0))
     elif len(years) >= 2:
-        clauses.append(TermRange("defenseYear", years[0], years[-1]))
+        clauses.append(boosted(
+            TermRange("defenseYear", years[0], years[-1]), 3.0
+        ))
 
-    # idioma
-    for language in extracted_info['language']:
-        language_parser = QueryParser("language", schema)
-        clauses.append(language_parser.parse(language))
+    #idioma
+    languages = extracted_info['language']
+    if languages:
+        clauses.append(boosted(
+            Or([Term("language", language) for language in languages]), 6.0
+        ))
 
-    # tipo de trabajo
-    for work_type in extracted_info['types']:
-        type_parser = QueryParser("type", schema)
-        clauses.append(type_parser.parse(work_type))
+    #tipo de trabajo
+    work_types = extracted_info['types']
+    if work_types:
+        clauses.append(boosted(
+            Or([Term("type", work_type) for work_type in work_types]), 5.0
+        ))
+
+    #subjects buscados a mano (lugares y siglos)
+    processed_subjects = set()
+    for subject in extracted_info['subjects']:
+        subject_key = subject.lower()
+        if subject_key in processed_subjects:
+            continue
+        subject_parser = QueryParser("subject", schema)
+        clauses.append(boosted(subject_parser.parse(subject), 3.0))
+        processed_subjects.add(subject_key)
 
     #temas generales (title, subject, description)
     remaining_text = extracted_info['clean_text']
@@ -146,7 +217,7 @@ def build_query(schema, extracted_info):
             group=OrGroup
         )
         text_query = text_parser.parse(remaining_text) #TODO: revisar si esto esta bien. creo que ya quita stopwords y tal 
-        clauses.append(text_query)
+        clauses.append(boosted(text_query, 1.0))
         
     if not clauses:
         return None
@@ -174,8 +245,8 @@ def process_information_needs(searcher, xml_path, output_path):
             
             if query:
                 results = searcher.searcher.search(query, limit=160) #minimo 100, 160 por estar seguros
-                for hit in results:
-                    ident = hit.get('identifier')
+                for result in results:
+                    ident = result.get('identifier')
                     if ident:
                         out_file.write(f"{need_id}\t{ident}\n")
 
@@ -200,7 +271,7 @@ class MySearcher:
             self.searcher = ix.searcher()
         self.parser = QueryParser("content", ix.schema, group = OrGroup)
 
-    def search(self, query_text, query_index, output):
+    def search(self, query_text, query_index, output): #NO USADA AHORA MISMO
         query = self.parser.parse(query_text)
         results = self.searcher.search(query, limit=100) #limite 100
         i = 1
