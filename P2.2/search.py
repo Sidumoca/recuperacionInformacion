@@ -23,6 +23,24 @@ from whoosh.analysis import Filter
 
 import xml.etree.ElementTree as ET
 
+#se ha pedido a un llm esta lista de palabras:
+QUERY_NOISE_WORDS = {
+    'qué', 'que', 'cuáles', 'cuales', 'cómo', 'como', 'dónde', 'donde',
+    'existen', 'existe', 'hay', 'sobre', 'acerca', 'relacionados', 'relacionadas',
+    'relacionado', 'relacionada', 'relación', 'relacion', 'centrados', 'centradas',
+    'centrado', 'centrada', 'posible', 'defecto', 'preferentemente', 'desarrollado',
+    'desarrollados', 'desarrollada', 'desarrolladas', 'ejemplos', 'ejemplo',
+    'estas', 'estos', 'esta', 'este', 'ese', 'esa', 'esos', 'esas',
+    'diferentes', 'durante', 'periodo', 'período', 'cualquier', 'otro', 'otra',
+    'otros', 'otras', 'aspecto', 'aspectos', 'relevancia', 'estoy', 'interesado',
+    'interesada', 'interesa', 'interesan', 'también', 'tambien', 'conocida',
+    'conocido', 'conocidas', 'conocidos', 'publicados', 'publicadas', 'publicado',
+    'publicada', 'entre', 'busco', 'buscar', 'deben', 'debe', 'ser', 'campo',
+    'realizados', 'realizadas', 'realizado', 'realizada', 'dirigidos', 'dirigidas',
+    'dirigido', 'dirigida', 'alguien', 'llamado', 'llamada', 'han', 'sido',
+    'tienen', 'tiene', 'ver', 'descripciones', 'conocer', 'encontrar', 'obtener', 'departamento'
+}
+
 try:
     nlp = spacy.load('es_core_news_sm')
 except OSError as exc:
@@ -60,7 +78,7 @@ def extract_information_needs(query_text):
     last_years_regex = r'\b(?:últimos|ultimos|pasados|anteriores)\s+(\d+)\s+años\b'
     last_years_match = re.findall(last_years_regex, query_text, flags=re.IGNORECASE)
     if last_years_match:
-        last_years = int(last_years_match[0])#TODO: comprobar que esto va? con un print o algo. 
+        last_years = int(last_years_match[0])#TODO: comprobar que esto va? revisar los años 
         current_year = 2026 #pereza poner el date, creo que asi servira
         start_year = current_year - last_years
         info['years'].extend([str(start_year), str(current_year)])
@@ -112,9 +130,7 @@ def extract_information_needs(query_text):
         match.strip()
         for match in re.findall(century_regex, query_text, flags=re.IGNORECASE)
     )
-    info['clean_text'] = re.sub(
-        century_regex, '', info['clean_text'], flags=re.IGNORECASE
-    )
+    #NO lo borro de clean text para que busque por titulo y eso tambien
     info['subjects'] = list(dict.fromkeys(info['subjects']))
 
     #departamentos buscados manualmente
@@ -126,9 +142,6 @@ def extract_information_needs(query_text):
         department_regex, info['clean_text'], flags=re.IGNORECASE
     )
     info['orgs'].extend(department.strip() for department in departments)
-    info['clean_text'] = re.sub(
-        department_regex, '', info['clean_text'], flags=re.IGNORECASE
-    )
 
     #entidades de spacy: las localizaciones se buscan en subject.
     doc = nlp(info['clean_text'])
@@ -138,21 +151,29 @@ def extract_information_needs(query_text):
             print(f'Persona detectada: {ent.text.strip()}') #TODO: esto para debug. mirar que imprime y quizas no borrar de clean text y que se procese en ambos sitios
         elif ent.label_ == 'ORG':
             info['orgs'].append(ent.text.strip())
-            print(f'Organizacion detectada: {ent.text.strip()}')
+            print(f'Organizacion detectada: {ent.text.strip()}') #TODO: si pilla parentesis, quitarlos antes de procesar con spacy
         elif ent.label_ in ('GPE', 'LOC'):
             subject = ent.text.strip()
             if subject.lower() in ('zaragoza', 'saragossa'):
                 info['subjects'].extend(['Zaragoza', 'Saragossa'])
             else:
                 info['subjects'].append(subject)
-            info['clean_text'] = info['clean_text'].replace(ent.text, ' ')
-    #ahora quito estos bichos del texto
+    #SI las borro de clean text. quizas hay que quitarlo, pero los nombres me parece mal que no se borren
+            info['clean_text'] = info['clean_text'].replace(ent.text, ' ') 
     for ent_text in info['persons'] + info['orgs']:
         info['clean_text'] = info['clean_text'].replace(ent_text, ' ')
+    
     info['subjects'] = list(dict.fromkeys(info['subjects']))
 
+    #quitamos signos de puntacion y palabras que sobran
+    clean_words = re.findall(r'\b[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9]+\b', info['clean_text'])
+    palabras_filtradas = [
+        w for w in clean_words 
+        if w.lower() not in QUERY_NOISE_WORDS and len(w) > 1
+    ]
+
     #limpieza general por lo visto
-    info['clean_text'] = re.sub(r'\s+', ' ', info['clean_text']).strip()
+    info['clean_text'] = ' '.join(palabras_filtradas)
     return info
 
  
@@ -168,34 +189,34 @@ def build_query(schema, extracted_info):
         parser_autor = QueryParser("autor", schema)
         parser_director = QueryParser("director", schema)
         q_person = Or([parser_autor.parse(person), parser_director.parse(person)])
-        clauses.append(boosted(q_person, 4.0))
+        clauses.append(boosted(q_person, 2.0))
         
     #departamento (organizaciones)
     for org in extracted_info['orgs']:
-        parser_dep = QueryParser("departamento", schema) #TODO: quizas poner que sea or y no and? no se si se puede
-        clauses.append(boosted(parser_dep.parse(org), 4.0))
+        parser_dep = QueryParser("departamento", schema, group=OrGroup) #TODO: quizas poner que sea or y no and? no se si se puede
+        clauses.append(boosted(parser_dep.parse(org), 1.8))
         
     #años
     years = extracted_info['years']
     if len(years) == 1:
-        clauses.append(boosted(Term("defenseYear", years[0]), 3.0))
+        clauses.append(boosted(Term("defenseYear", years[0]), 1.4))
     elif len(years) >= 2:
         clauses.append(boosted(
-            TermRange("defenseYear", years[0], years[-1]), 3.0
+            TermRange("defenseYear", years[0], years[-1]), 1.0
         ))
 
     #idioma
     languages = extracted_info['language']
     if languages:
         clauses.append(boosted(
-            Or([Term("language", language) for language in languages]), 6.0
+            Or([Term("language", language) for language in languages]), 1.0
         ))
 
     #tipo de trabajo
     work_types = extracted_info['types']
     if work_types:
         clauses.append(boosted(
-            Or([Term("type", work_type) for work_type in work_types]), 5.0
+            Or([Term("type", work_type) for work_type in work_types]), 1.2
         ))
 
     #subjects buscados a mano (lugares y siglos)
@@ -205,7 +226,7 @@ def build_query(schema, extracted_info):
         if subject_key in processed_subjects:
             continue
         subject_parser = QueryParser("subject", schema)
-        clauses.append(boosted(subject_parser.parse(subject), 3.0))
+        clauses.append(boosted(subject_parser.parse(subject), 2.5))
         processed_subjects.add(subject_key)
 
     #temas generales (title, subject, description)
@@ -213,11 +234,12 @@ def build_query(schema, extracted_info):
     if remaining_text:
         text_parser = MultifieldParser( #se ha preguntado a un LLM por una forma de buscar en el resto de campos interesantes, asi se ha encontrado el MultifieldParser
             ["title", "subject", "description"], 
-            schema, 
+            schema,
+            fieldboosts={"title": 3.0, "subject": 2.5, "description": 1.2}, 
             group=OrGroup
         )
         text_query = text_parser.parse(remaining_text) #TODO: revisar si esto esta bien. creo que ya quita stopwords y tal 
-        clauses.append(boosted(text_query, 1.0))
+        clauses.append(boosted(text_query, 2.5))
         
     if not clauses:
         return None
@@ -261,7 +283,7 @@ class SnowballFilter(Filter):
            yield t
 
 class MySearcher:
-    def __init__(self, index_folder, model_type = 'tfidf'):
+    def __init__(self, index_folder, model_type = 'bm25'):
         ix = index.open_dir(index_folder)
         if model_type == 'tfidf':
             # Apply a vector retrieval model as default
@@ -269,7 +291,7 @@ class MySearcher:
         else:
             # Apply the probabilistic BM25F model, the default model in searcher method
             self.searcher = ix.searcher()
-        self.parser = QueryParser("content", ix.schema, group = OrGroup)
+        #self.parser = QueryParser("content", ix.schema, group = OrGroup)
 
     def search(self, query_text, query_index, output): #NO USADA AHORA MISMO
         query = self.parser.parse(query_text)

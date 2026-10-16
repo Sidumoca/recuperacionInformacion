@@ -118,7 +118,7 @@ class MyIndex:
 
         subject_text = get_tag_text('subject')
         identifier_text = get_first_tag_text('identifier')
-        type_text = get_tag_text('type')
+        type_text = get_first_tag_text('type')
         # si hay varios idiomas, se pone el primero
         language_text = get_first_tag_text('language')
             
