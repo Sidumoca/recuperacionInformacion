@@ -6,6 +6,8 @@ Last update: 2024-09-07
 Program to search a free text query on a previously created inverted index.
 This program is based on the whoosh library. See https://pypi.org/project/Whoosh/ .
 Usage: python search.py -index <index folder>
+
+Ejecutar:  python3.12 search.py -index index -infoNeeds ./queries/necesidadesInformacion.xml -output ./results/resultados.txt
 """
 
 import sys
@@ -22,6 +24,8 @@ from nltk.stem.snowball import SnowballStemmer
 from whoosh.analysis import Filter
 
 import xml.etree.ElementTree as ET
+
+from datetime import datetime
 
 #se ha pedido a un llm esta lista de palabras:
 QUERY_NOISE_WORDS = {
@@ -79,7 +83,7 @@ def extract_information_needs(query_text):
     last_years_match = re.findall(last_years_regex, query_text, flags=re.IGNORECASE)
     if last_years_match:
         last_years = int(last_years_match[0])#TODO: comprobar que esto va? revisar los años 
-        current_year = 2026 #pereza poner el date, creo que asi servira
+        current_year = datetime.now().year
         start_year = current_year - last_years
         info['years'].extend([str(start_year), str(current_year)])
         info['clean_text'] = re.sub(last_years_regex, '', info['clean_text'], flags=re.IGNORECASE)
