@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><informationNeeds>
+    <informationNeed>
+        <identifier>1</identifier>
+        <text>Estoy buscando documentos defendidos en 2016.</text>
+    </informationNeed>
+    <informationNeed>
+        <identifier>2</identifier>
+        <text>Quiero ver documentos de 2019 que traten sobre fraude.</text>
+    </informationNeed>
+    <informationNeed>
+        <identifier>3</identifier>
+        <text>Busco documentos sobre recursos que hablen de modelos.</text>
+    </informationNeed>
+    <informationNeed>
+        <identifier>4</identifier>
+        <text>Me interesan los documentos de 2016 dirigidos o escritos por Nicolás.</text>
+    </informationNeed>
+    <informationNeed>
+        <identifier>5</identifier>
+        <text>Quiero documentos sobre geografía y cartografía.</text>
+    </informationNeed>
+</informationNeeds>
