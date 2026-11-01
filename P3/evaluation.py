@@ -13,6 +13,7 @@ from typing import Dict, List, Tuple
 Qrels = Dict[str, Dict[str, int]]
 Results = Dict[str, List[str]]
 RecallPrecisionPoints = List[Tuple[float, float]]
+MAX_RESULTS_PER_NEED = 45
 
 
 def _read_fields(file_path: Path, expected_fields: int) -> List[Tuple[int, List[str]]]:
@@ -99,8 +100,8 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def calcular_recall_precision(ranking: List[str], relevancias: Dict[str, int], k: int) -> RecallPrecisionPoints:
-    ranking_top_k = ranking[:k]
+def calcular_recall_precision(ranking: List[str], relevancias: Dict[str, int]) -> RecallPrecisionPoints:
+    ranking_top_k = ranking[:MAX_RESULTS_PER_NEED]
     total_relevantes = sum(relevancia == 1 for relevancia in relevancias.values())
     if total_relevantes == 0:
         return []
@@ -131,19 +132,20 @@ def calcular_recall_precision_interpolado(puntos: RecallPrecisionPoints,) -> Rec
 
 
 #se ha pedido a un llm esta funcion para tener la opcion de imprimir por pantalla o por fichero por motivos de debug
-def generar_output(qrels, results, outputFile, k=45):
+def generar_output(qrels, results, outputFile):
     """Genera el informe y guarda toda la salida en ``outputFile``."""
     try:
         with outputFile.open("w", encoding="utf-8") as output:
             with redirect_stdout(output):
-                _generar_output(qrels, results, k)
+                _generar_output(qrels, results)
     except OSError as exc:
         raise OSError(
             f"No se puede escribir el fichero '{outputFile}': {exc}"
         ) from exc
 
 
-def _generar_output(qrels, results, k=45):
+def _generar_output(qrels, results):
+    k = MAX_RESULTS_PER_NEED
     precisionGlobal = 0
     recallGlobal = 0
     precisionAt10Global = 0
@@ -154,12 +156,16 @@ def _generar_output(qrels, results, k=45):
     
     n_necesidades = len(qrels)
     for information_need, relevancias in qrels.items():
-        print(f"INFORMATION_NEED {information_need}")
+        print(f"INFORMATION_NEED\t{information_need}")
 
-        documentos_recuperados = set(results.get(information_need, []))
-        ranking = results.get(information_need, [])
+        ranking = results.get(information_need, [])[:k]
+        if not ranking:
+            continue
+        documentos_recuperados = set(ranking)
         documentos_juzgados = set(relevancias)
         documentos = documentos_juzgados | documentos_recuperados
+
+        
 
         n_true_positive = sum(
             relevancias.get(documento, 0) == 1
@@ -204,13 +210,13 @@ def _generar_output(qrels, results, k=45):
         )
         medidaMAP+=precisionPromedio
 
-        print(f"precision {precision:.3f}")
-        print(f"recall {recall:.3f}")
-        print(f"F1 {f1score:.3f}")
-        print(f"prec@10 {precisionAt10:.3f}")
-        print(f"average_precision {precisionPromedio:.3f}")
+        print(f"precision\t{precision:.3f}")
+        print(f"recall\t{recall:.3f}")
+        print(f"F1\t{f1score:.3f}")
+        print(f"prec@10\t{precisionAt10:.3f}")
+        print(f"average_precision\t{precisionPromedio:.3f}")
 
-        precision_recall = calcular_recall_precision(ranking, relevancias, k)
+        precision_recall = calcular_recall_precision(ranking, relevancias)
         interpolated_precision_recall = (
             calcular_recall_precision_interpolado(precision_recall)
         )
@@ -223,11 +229,11 @@ def _generar_output(qrels, results, k=45):
 
         print("recall_precision")
         for recall_point, precision_point in precision_recall:
-            print(f"{recall_point:.3f} {precision_point:.3f}")
+            print(f"{recall_point:.3f}\t{precision_point:.3f}")
 
         print("interpolated_recall_precision")
         for recall_point, precision_point in interpolated_precision_recall:
-            print(f"{recall_point:.3f} {precision_point:.3f}")
+            print(f"{recall_point:.3f}\t{precision_point:.3f}")
         print("") #un \n
 
     print(f"TOTAL")
@@ -242,14 +248,14 @@ def _generar_output(qrels, results, k=45):
         (recall_point, precision_point / n_necesidades)
         for recall_point, precision_point in interpolated_precision_recallGlobal
     ]
-    print(f"precision {precisionGlobal:.3f}")
-    print(f"recall {recallGlobal:.3f}")
-    print(f"F1 {f1scoreGlobal:.3f}")
-    print(f"prec@10 {precisionAt10Global:.3f}")
-    print(f"MAP {medidaMAP:.3f}")
+    print(f"precision\t{precisionGlobal:.3f}")
+    print(f"recall\t{recallGlobal:.3f}")
+    print(f"F1\t{f1scoreGlobal:.3f}")
+    print(f"prec@10\t{precisionAt10Global:.3f}")
+    print(f"MAP\t{medidaMAP:.3f}")
     print("interpolated_recall_precision")
     for recall_point, precision_point in interpolated_precision_recallGlobal:
-        print(f"{recall_point:.3f} {precision_point:.3f}")
+        print(f"{recall_point:.3f}\t{precision_point:.3f}")
 
 
 
