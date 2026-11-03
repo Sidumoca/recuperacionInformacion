@@ -1,13 +1,14 @@
-"""Base de lectura de ficheros para la evaluación de un sistema de RI.
-
-Este módulo solo prepara los datos de entrada. El cálculo de las medidas de
-evaluación se añadirá posteriormente.
+"""Funciones para la evaluación de sistemas de recuperación de información.
+Llamar como: python3 evaluation.py -qrels <fichero_qrels> -results <fichero_results> -output  (-graphicsPath <ruta_curvas>)
+graphicsPath es opcional, si no se indica, no se imprimen
 """
 
 import argparse
 from contextlib import redirect_stdout
 from pathlib import Path
 from typing import Dict, List, Tuple
+
+import matplotlib.pyplot as plt
 
 
 Qrels = Dict[str, Dict[str, int]]
@@ -97,6 +98,12 @@ def parse_arguments() -> argparse.Namespace:
         type=Path,
         help="fichero donde se escribirán las medidas de evaluación",
     )
+    parser.add_argument(
+        "-graphicsPath",
+        required=False,
+        type=Path,
+        help="ruta en la que se imprimiran las curvas precision recall. Si vacio, no imprime"
+    )
     return parser.parse_args()
 
 
@@ -132,19 +139,19 @@ def calcular_recall_precision_interpolado(puntos: RecallPrecisionPoints,) -> Rec
 
 
 #se ha pedido a un llm esta funcion para tener la opcion de imprimir por pantalla o por fichero por motivos de debug
-def generar_output(qrels, results, outputFile):
+def generar_output(qrels, results, graphicsPath, outputFile):
     """Genera el informe y guarda toda la salida en ``outputFile``."""
     try:
         with outputFile.open("w", encoding="utf-8") as output:
             with redirect_stdout(output):
-                _generar_output(qrels, results)
+                _generar_output(qrels, results, graphicsPath)
     except OSError as exc:
         raise OSError(
             f"No se puede escribir el fichero '{outputFile}': {exc}"
         ) from exc
 
 
-def _generar_output(qrels, results):
+def _generar_output(qrels, results, graphicsPath):
     k = MAX_RESULTS_PER_NEED
     precisionGlobal = 0
     recallGlobal = 0
@@ -153,6 +160,7 @@ def _generar_output(qrels, results):
     interpolated_precision_recallGlobal: RecallPrecisionPoints = [
         (indice / 10, 0.0) for indice in range(11)
     ]
+    figura_curvas = plt.figure()
     
     n_necesidades = len(qrels)
     for information_need, relevancias in qrels.items():
@@ -236,6 +244,15 @@ def _generar_output(qrels, results):
             print(f"{recall_point:.3f}\t{precision_point:.3f}")
         print("") #un \n
 
+        #poner curvas precision recall si se ha indicado ruta
+        if graphicsPath:
+            graphicsPath.mkdir(parents=True, exist_ok=True)
+            figura_curvas.gca().plot(
+                [recall for recall, _ in interpolated_precision_recall],
+                [precision for _, precision in interpolated_precision_recall],
+                label=information_need,
+            )
+
     print(f"TOTAL")
     precisionGlobal = precisionGlobal / n_necesidades
     recallGlobal = recallGlobal / n_necesidades
@@ -248,6 +265,25 @@ def _generar_output(qrels, results):
         (recall_point, precision_point / n_necesidades)
         for recall_point, precision_point in interpolated_precision_recallGlobal
     ]
+
+    if graphicsPath:
+        figura_curvas.gca().plot(
+            [recall for recall, _ in interpolated_precision_recallGlobal],
+            [precision for _, precision in interpolated_precision_recallGlobal],
+            label="Total",
+            linewidth=2,
+        )
+        figura_curvas.gca().set_xlabel("Recall")
+        figura_curvas.gca().set_ylabel("Precision")
+        figura_curvas.gca().set_title("Precision-Recall interpolado")
+        figura_curvas.gca().set_xlim(0, 1)
+        figura_curvas.gca().set_ylim(0, 1)
+        figura_curvas.gca().grid(True)
+        figura_curvas.gca().legend()
+        figura_curvas.tight_layout()
+        figura_curvas.savefig(graphicsPath / "precision_recall.png")
+        plt.close(figura_curvas)
+
     print(f"precision\t{precisionGlobal:.3f}")
     print(f"recall\t{recallGlobal:.3f}")
     print(f"F1\t{f1scoreGlobal:.3f}")
@@ -259,6 +295,7 @@ def _generar_output(qrels, results):
 
 
 
+
     
     
 
@@ -267,7 +304,7 @@ def main() -> None:
     qrels = parse_qrels(args.qrels)
     results = parse_results(args.results)
 
-    generar_output(qrels, results, args.output)
+    generar_output(qrels, results, args.graphicsPath, args.output)
 
 
 if __name__ == "__main__":
