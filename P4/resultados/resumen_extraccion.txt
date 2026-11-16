@@ -1,0 +1,15 @@
+XML encontrados: 21869
+Registros TFG incluidos: 13879
+TFG sin categoría reconocida: 9
+Registros descartados por no ser TFG: 7981
+TFG sin título: 0
+TFG sin descripción: 0
+Errores de lectura XML: 0
+
+Distribución de categorías:
+Ciencias de la Salud: 3564
+Ciencias: 1096
+Ingeniería y Arquitectura: 1864
+Filosofia y Letras: 1457
+Economía y Empresa: 2219
+Derecho, Educación y Ciencias Sociales: 3679

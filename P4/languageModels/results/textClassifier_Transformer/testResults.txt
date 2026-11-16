@@ -1,5 +1,5 @@
 ----------------------------------------------------
-Model training time: 3 min 39.46 s
+Model training time: 1 min 47.84 s
 ----------------------------------------------------
 Model: "sequential"
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
@@ -23,6 +23,6 @@ Model: "sequential"
  Non-trainable params: 0 (0.00 B)
  Optimizer params: 2,731,582 (10.42 MB)
 
-Model precision: 87.30%
+Model precision: 87.45%
 Classification result of first element in test set
 Real category:  3  Predicted Category:  3

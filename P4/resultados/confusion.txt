@@ -1,0 +1,15 @@
+Orden de categorías:
+0: Ciencias de la Salud
+1: Ciencias
+2: Ingeniería y Arquitectura
+3: Filosofia y Letras
+4: Economía y Empresa
+5: Derecho, Educación y Ciencias Sociales
+
+Matriz de confusión (filas = reales; columnas = predichas):
+[[590   0   9  10  22  82]
+ [ 13   0 102   8  92   4]
+ [  2   0 259   8 100   4]
+ [  1   0  25  52 147  66]
+ [  0   0 101  30 245  68]
+ [ 17   0   3  35  63 618]]

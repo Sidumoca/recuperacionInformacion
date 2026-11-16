@@ -1,0 +1,6 @@
+0	Ciencias de la Salud
+1	Ciencias
+2	Ingeniería y Arquitectura
+3	Filosofia y Letras
+4	Economía y Empresa
+5	Derecho, Educación y Ciencias Sociales

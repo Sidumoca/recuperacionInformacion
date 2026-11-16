@@ -1,0 +1,19 @@
+Semilla aleatoria: 0
+Épocas: 30
+Ejemplos entrenamiento: 11103
+Ejemplos prueba: 2776
+Tamaño vocabulario: 20000
+Accuracy: 0.6354
+
+                                        precision    recall  f1-score   support
+
+                  Ciencias de la Salud       0.95      0.83      0.88       713
+                              Ciencias       0.00      0.00      0.00       219
+             Ingeniería y Arquitectura       0.52      0.69      0.59       373
+                    Filosofia y Letras       0.36      0.18      0.24       291
+                    Economía y Empresa       0.37      0.55      0.44       444
+Derecho, Educación y Ciencias Sociales       0.73      0.84      0.78       736
+
+                              accuracy                           0.64      2776
+                             macro avg       0.49      0.52      0.49      2776
+                          weighted avg       0.60      0.64      0.61      2776
