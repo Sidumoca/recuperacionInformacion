@@ -1,0 +1,107 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<http://ejemplo.org/libro10> dc:creator "Ernesto Sabato" ;
+    dc:title "El túnel" .
+
+<http://ejemplo.org/libro11> dc:creator "Juan Rulfo" ;
+    dc:title "Pedro Páramo" .
+
+<http://ejemplo.org/libro13> dc:creator "Anonimo" ;
+    dc:title "El lazarillo de Tormes" .
+
+<http://ejemplo.org/libro14> dc:creator "Gabriel García Márquez" ;
+    dc:title "Crónica de una muerte anunciada" .
+
+<http://ejemplo.org/libro15> dc:creator "Manuel de Falla" ;
+    dc:title "El amor brujo" .
+
+<http://ejemplo.org/libro16> dc:creator "Jorge Luis Borges" ;
+    dc:title "El Aleph" .
+
+<http://ejemplo.org/libro17> dc:creator "Camilo José Cela" ;
+    dc:title "La colmena" .
+
+<http://ejemplo.org/libro18> dc:creator "Jorge Luis Borges" ;
+    dc:title "El jardín de los senderos que se bifurcan" .
+
+<http://ejemplo.org/libro19> dc:creator "Carlos Fuentes" ;
+    dc:title "La muerte de Artemio Cruz" .
+
+<http://ejemplo.org/libro20> dc:creator "Jorge Isaacs" ;
+    dc:title "María" .
+
+<http://ejemplo.org/libro21> dc:creator "Alejo Carpentier" ;
+    dc:title "Los pasos perdidos" .
+
+<http://ejemplo.org/libro22> dc:creator "Gabriel García Márquez" ;
+    dc:title "El general en su laberinto" .
+
+<http://ejemplo.org/libro23> dc:creator "Franz Kafka" ;
+    dc:title "La metamorfosis" .
+
+<http://ejemplo.org/libro24> dc:creator "Roberto Bolaño" ;
+    dc:title "Los detectives salvajes" .
+
+<http://ejemplo.org/libro25> dc:creator "Milan Kundera" ;
+    dc:title "El libro de la risa y el olvido" .
+
+<http://ejemplo.org/libro26> dc:creator "Adolfo Bioy Casares" ;
+    dc:title "La invención de Morel" .
+
+<http://ejemplo.org/libro27> dc:creator "Isabel Allende" ;
+    dc:title "La ciudad de las bestias" .
+
+<http://ejemplo.org/libro28> dc:creator "Gabriel García Márquez" ;
+    dc:title "El coronel no tiene quien le escriba" .
+
+<http://ejemplo.org/libro29> dc:creator "Gabriel García Márquez" ;
+    dc:title "El otoño del patriarca" .
+
+<http://ejemplo.org/libro30> dc:creator "Laura Esquivel" ;
+    dc:title "Como agua para chocolate" .
+
+<http://ejemplo.org/libro31> dc:creator "Gabriel García Márquez" ;
+    dc:title "El amor en los tiempos del cólera" .
+
+<http://ejemplo.org/libro32> dc:creator "León Tolstói" ;
+    dc:title "La muerte de Iván Ilich" .
+
+<http://ejemplo.org/libro33> dc:creator "Oscar Wilde" ;
+    dc:title "El retrato de Dorian Gray" .
+
+<http://ejemplo.org/libro34> dc:creator "Antoine de Saint-Exupéry" ;
+    dc:title "El principito" .
+
+<http://ejemplo.org/libro35> dc:creator "Homero" ;
+    dc:title "La Odisea" .
+
+<http://ejemplo.org/libro36> dc:creator "Homero" ;
+    dc:title "La Iliada" .
+
+<http://ejemplo.org/libro4> dc:creator "Federico García Lorca" ;
+    dc:title "La casa de Bernarda Alba" .
+
+<http://ejemplo.org/libro42> dc:creator "Mario Benedetti" ;
+    dc:title "La tregua" .
+
+<http://ejemplo.org/libro45> dc:creator "Jorge Luis Borges" ;
+    dc:title "Ficciones" .
+
+<http://ejemplo.org/libro47> dc:creator "José Zorrilla" ;
+    dc:title "Don Juan Tenorio" .
+
+<http://ejemplo.org/libro49> dc:creator "Gabriel García Márquez" ;
+    dc:title "Cien años de soledad" .
+
+<http://ejemplo.org/libro5> dc:creator "Carlos Ruiz Zafón" ;
+    dc:title "La sombra del viento" .
+
+<http://ejemplo.org/libro50> dc:creator "Miguel de Cervantes" ;
+    dc:title "El Quijote" .
+
+<http://ejemplo.org/libro7> dc:creator "Julio Cortázar" ;
+    dc:title "Rayuela" .
+
+<http://ejemplo.org/libro9> dc:creator "Mario Vargas Llosa" ;
+    dc:title "La ciudad y los perros" .
+

@@ -1,0 +1,131 @@
+@prefix rdf:  <http://w3.org> .
+@prefix rdfs: <http://w3.org> .
+@prefix owl:  <http://w3.org> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix zag:  <http://unizar.es> .
+
+# Declaración de la ontología
+<http://unizar.es> a owl:Ontology ;
+    rdfs:label "Ontología del Repositorio Zaguán"@es ;
+    rdfs:comment "Esquema RDFS/OWL para modelar los registros OAI-DC de Zaguán."@es .
+
+# ==============================================================================
+# 1. CLASES (Conceptos del dominio)
+# ==============================================================================
+
+zag:Documento rdfs:subClassOf owl:Thing ;
+    rdfs:label "Documento"@es ;
+    rdfs:comment "Recurso académico depositado en el repositorio Zaguán."@es .
+
+# Subclases que heredan de Documento (mapean dc:type)
+zag:TAZ-TFG rdfs:subClassOf zag:Documento ;
+    rdfs:label "Trabajo Fin de Grado"@es .
+
+zag:TAZ-TFM rdfs:subClassOf zag:Documento ;
+    rdfs:label "Trabajo Fin de Máster"@es .
+
+zag:TAZ-PFC rdfs:subClassOf zag:Documento ;
+    rdfs:label "Proyecto Fin de Carrera"@es .
+
+zag:TESIS rdfs:subClassOf zag:Documento ;
+    rdfs:label "Tesis Doctoral"@es .
+
+zag:Persona rdfs:subClassOf owl:Thing ;
+    rdfs:label "Persona"@es ;
+    rdfs:comment "Individuo que participa como autor o colaborador/director de un documento."@es .
+
+zag:Materia rdfs:subClassOf owl:Thing ;
+    rdfs:label "Materia"@es ;
+    rdfs:comment "Palabra clave o área temática asociada a un documento (dc:subject)."@es .
+
+zag:EntidadPublicadora rdfs:subClassOf owl:Thing ;
+    rdfs:label "Entidad Publicadora"@es ;
+    rdfs:comment "Institución o departamento responsable de la publicación (dc:publisher)."@es .
+
+# ==============================================================================
+# 2. OBJECT PROPERTIES (Relaciones entre Clases)
+# ==============================================================================
+
+zag:tieneAutor a owl:ObjectProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range zag:Persona ;
+    rdfs:label "tiene autor"@es ;
+    rdfs:comment "Mapea la etiqueta dc:creator."@es .
+
+zag:tieneDirector a owl:ObjectProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range zag:Persona ;
+    rdfs:label "tiene director"@es ;
+    rdfs:comment "Mapea la etiqueta dc:contributor."@es .
+
+zag:tieneMateria a owl:ObjectProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range zag:Materia ;
+    rdfs:label "tiene materia"@es ;
+    rdfs:comment "Mapea la etiqueta dc:subject."@es .
+
+zag:publicadoPor a owl:ObjectProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range zag:EntidadPublicadora ;
+    rdfs:label "publicado por"@es ;
+    rdfs:comment "Mapea la etiqueta dc:publisher."@es .
+
+
+# ==============================================================================
+# 3. DATATYPE PROPERTIES (Atributos Literales)
+# ==============================================================================
+
+zag:titulo a owl:DatatypeProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:string ;
+    rdfs:label "título"@es ;
+    rdfs:comment "Mapea dc:title. Campo candidato para índice textual."@es .
+
+zag:descripcion a owl:DatatypeProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:string ;
+    rdfs:label "descripción o resumen"@es ;
+    rdfs:comment "Mapea dc:description. Campo candidato para índice textual."@es .
+
+zag:fecha a owl:DatatypeProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:gYear ;
+    rdfs:label "fecha de publicación"@es ;
+    rdfs:comment "Mapea dc:date."@es .
+
+zag:idioma a owl:DatatypeProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:language ;
+    rdfs:label "idioma"@es ;
+    rdfs:comment "Mapea dc:language."@es .
+
+zag:licencia a owl:DatatypeProperty;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "licencia"@es ;
+    rdfs:comment "Mapea la etiqueta dc:rights."@es .
+
+zag:ficheroRelacionado a owl:DatatypeProperty ;
+    rdfs:domain zag:Documento ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "fichero relacionado"@es ;
+    rdfs:comment "Mapea dc:relation (enlaces a los PDFs del registro)."@es .
+
+# Propiedad para guardar el texto original de los conceptos generados
+zag:nombrePersona a owl:DatatypeProperty ;
+    rdfs:domain zag:Persona ;
+    rdfs:range xsd:string ;
+    rdfs:label "nombre de la persona"@es ;
+    rdfs:comment "Almacena la cadena exacta del XML para Persona."@es .
+
+zag:nombreMateria a owl:DatatypeProperty ;
+    rdfs:domain zag:Materia ;
+    rdfs:range xsd:string ;
+    rdfs:label "nombre de la materia"@es ;
+    rdfs:comment "Almacena la cadena exacta del XML para Materia."@es .
+
+zag:nombreEntidad a owl:DatatypeProperty ;
+    rdfs:domain zag:EntidadPublicadora ;
+    rdfs:range xsd:string ;
+    rdfs:label "nombre de la entidad publicadora"@es ;
+    rdfs:comment "Almacena la cadena exacta del XML para EntidadPublicadora."@es . EntidadPublicadora, etc."@es .

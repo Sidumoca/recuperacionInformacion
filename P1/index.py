@@ -128,7 +128,7 @@ class MyIndex:
         )
 if __name__ == '__main__':
 
-    index_folder = '../whooshindex'
+    index_folder = '/whooshindex'
     docs_folder = '../docs'
     i = 1
     while i < len(sys.argv):

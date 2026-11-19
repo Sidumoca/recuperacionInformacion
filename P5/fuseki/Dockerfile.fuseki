@@ -1,0 +1,6 @@
+#fuseki: 5.1.0
+FROM stain/jena-fuseki@sha256:b1d0c96f19adddef417520184471ac816cf36c6e72936a88ea02b29f4305929a
+COPY --chown=fuseki:fuseki datasetExample.ttl /fuseki/configuration/datasetExample.ttl
+USER root
+RUN apk update && apk add --no-cache nano
+USER fuseki

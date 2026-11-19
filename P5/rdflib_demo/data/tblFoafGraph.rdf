@@ -1,0 +1,108 @@
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix cert: <http://www.w3.org/ns/auth/cert#> .
+@prefix con: <http://www.w3.org/2000/10/swap/pim/contact#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo1: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix space: <http://www.w3.org/ns/pim/space#> .
+@prefix web: <http://my-profile.eu/ns/webapp#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2000/10/instances/DesignIssues/Overview.html> dc:title "Design Issues for the World Wide Web" ;
+    foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.w3.org/2000/10/instances/data#start> a foaf:PersonalProfileDocument ;
+    cc:license <http://creativecommons.org/licenses/by-nc/3.0/> ;
+    dc:title "Tim Berners-Lee's FOAF file" ;
+    foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> ;
+    foaf:primaryTopic <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://dig.csail.mit.edu/2005/ajar/ajaw/data#Tabulator> doap:developer <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://dig.csail.mit.edu/2007/01/camp/data#course> foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://dig.csail.mit.edu/data#DIG> foaf:member <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://wiki.ontoworld.org/index.php/_IRW2006> dc:title "Identity, Reference and the Web workshop 2006" ;
+    con:participant <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.ecs.soton.ac.uk/~dt2/dlstuff/www2006_data#panel-panelk01> rdfs:label "The Next Wave of the Web (Plenary Panel)" ;
+    con:participant <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.w3.org/2000/10/swap/data#Cwm> doap:developer <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.w3.org/2011/Talks/0331-hyderabad-tbl/data#talk> dcterms:title "Designing the Web for an Open Society" ;
+    foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.w3.org/data#W3C> foaf:member <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www4.wiwiss.fu-berlin.de/booksMeshup/books/006251587X> dc:creator <http://www.w3.org/People/Berners-Lee/card#i> ;
+    dc:title "Weaving the Web: The Original Design and Ultimate Destiny of the World Wide Web" .
+
+<http://www.w3.org/2000/10/instances/data#findMyLoc> web:description "Share your location with your friends." ;
+    web:endpoint <https://timbl.data.fm/test2/locator/location> ;
+    web:name "FindMyLoc" ;
+    web:service <https://findmyloc.rww.io/> .
+
+<http://dig.csail.mit.edu/2008/webdav/timbl/foaf.rdf> a foaf:PersonalProfileDocument ;
+    cc:license <http://creativecommons.org/licenses/by-nc/3.0/> ;
+    dc:title "Tim Berners-Lee's editable FOAF file" ;
+    foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> ;
+    foaf:primaryTopic <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://dig.csail.mit.edu/breadcrumbs/blog/4> dc:title "timbl's blog" ;
+    rdfs:seeAlso <http://dig.csail.mit.edu/breadcrumbs/blog/feed/4> ;
+    foaf:maker <http://www.w3.org/People/Berners-Lee/card#i> .
+
+<http://www.gutenberg.org/catalog/world/readfile?fk_files=2372108&pageno=11> dc:title "Moby Dick, or, the whale" .
+
+<http://www.w3.org/People/Berners-Lee/card#i> a con:Male,
+        foaf:Person ;
+    rdfs:label "Tim Berners-Lee" ;
+    web:uses <http://www.w3.org/2000/10/instances/data#findMyLoc> ;
+    rdfs:seeAlso <http://dig.csail.mit.edu/2008/webdav/timbl/foaf.rdf>,
+        <http://www.w3.org/2007/11/Talks/search/query?date=All+past+and+future+talks&event=None&activity=None&name=Tim+Berners-Lee&country=None&language=None&office=None&rdfOnly=yes&submit=Submit> ;
+    con:assistant <http://www.w3.org/People/Berners-Lee/card#amy> ;
+    con:homePage <http://www.w3.org/2000/10/instances/data/input/> ;
+    con:likes <http://www.gutenberg.org/catalog/world/readfile?fk_files=2372108&pageno=11> ;
+    con:office [ con:address [ con:city "Cambridge" ;
+                    con:country "USA" ;
+                    con:postalCode "02139" ;
+                    con:street "32 Vassar Street" ;
+                    con:street2 "MIT CSAIL Room 32-G524" ] ;
+            con:phone <tel:+1-617-253-5702> ;
+            geo1:location [ geo1:lat "42.361860" ;
+                    geo1:long "-71.091840" ] ] ;
+    con:preferredURI "http://www.w3.org/People/Berners-Lee/card#i" ;
+    con:publicHomePage <http://www.w3.org/2000/10/instances/data/input/> ;
+    owl:sameAs <http://graph.facebook.com/512908782#>,
+        <http://identi.ca/user/45563>,
+        <http://www.advogato.org/person/timbl/foaf.rdf#me>,
+        <http://www4.wiwiss.fu-berlin.de/bookmashup/persons/Tim+Berners-Lee>,
+        <http://www4.wiwiss.fu-berlin.de/dblp/resource/person/100007> ;
+    space:preferencesFile <http://localhost/TimBL/Data/preferences.n3> ;
+    foaf:account <http://en.wikipedia.org/wiki/User:Timbl>,
+        <http://identi.ca/timbl>,
+        <http://twitter.com/timberners_lee>,
+        <http://www.reddit.com/user/timbl/> ;
+    foaf:based_near [ geo1:lat "42.361860" ;
+            geo1:long "-71.091840" ] ;
+    foaf:family_name "Berners-Lee" ;
+    foaf:givenname "Timothy" ;
+    foaf:homepage <http://www.w3.org/People/Berners-Lee/> ;
+    foaf:img <http://www.w3.org/Press/Stock/Berners-Lee/2001-europaeum-eighth.jpg> ;
+    foaf:mbox <mailto:timbl@w3.org> ;
+    foaf:mbox_sha1sum "965c47c5a70db7407210cef6e4e6f5374a525c5c" ;
+    foaf:name "Timothy Berners-Lee" ;
+    foaf:nick "TimBL",
+        "timbl" ;
+    foaf:openid <http://www.w3.org/People/Berners-Lee/> ;
+    foaf:phone <tel:+1-(617)-253-5702> ;
+    foaf:title "Sir" ;
+    foaf:weblog <http://dig.csail.mit.edu/breadcrumbs/blog/4> ;
+    foaf:workplaceHomepage <http://www.w3.org/> .
+

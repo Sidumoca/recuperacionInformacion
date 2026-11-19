@@ -1,0 +1,433 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Recursos FOAF para los autores
+<http://ejemplo.org/autor/ErnestoSabato> a foaf:Person ;
+    foaf:name "Ernesto Sabato" ;
+    foaf:birthDate "1911-06-24"^^xsd:date ;
+    foaf:deathDate "2011-04-30"^^xsd:date ;
+    foaf:based_near "Argentina" ;
+    dct:description "Escritor, ensayista y físico argentino" .
+
+<http://ejemplo.org/autor/JuanRulfo> a foaf:Person ;
+    foaf:name "Juan Rulfo" ;
+    foaf:birthDate "1917-05-16"^^xsd:date ;
+    foaf:deathDate "1986-01-07"^^xsd:date ;
+    foaf:based_near "México" ;
+    dct:description "Escritor y fotógrafo mexicano" .
+
+<http://ejemplo.org/autor/Anonimo> a foaf:Person ;
+    foaf:name "Anónimo" ;
+    dct:description "Autor desconocido" .
+
+<http://ejemplo.org/autor/GabrielGarciaMarquez> a foaf:Person ;
+    foaf:name "Gabriel García Márquez" ;
+    foaf:birthDate "1927-03-06"^^xsd:date ;
+    foaf:deathDate "2014-04-17"^^xsd:date ;
+    foaf:based_near "Colombia" ;
+    dct:description "Escritor, guionista y periodista colombiano, premio Nobel de Literatura" ;
+    foaf:mbox <mailto:ggm@example.org> .
+
+<http://ejemplo.org/autor/ManueldeFalla> a foaf:Person ;
+    foaf:name "Manuel de Falla" ;
+    foaf:birthDate "1876-11-23"^^xsd:date ;
+    foaf:deathDate "1946-11-14"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Compositor español" .
+
+<http://ejemplo.org/autor/JorgeLuisBorges> a foaf:Person ;
+    foaf:name "Jorge Luis Borges" ;
+    foaf:birthDate "1899-08-24"^^xsd:date ;
+    foaf:deathDate "1986-06-14"^^xsd:date ;
+    foaf:based_near "Argentina" ;
+    dct:description "Escritor, poeta y ensayista argentino" .
+
+<http://ejemplo.org/autor/CamiloJoseCela> a foaf:Person ;
+    foaf:name "Camilo José Cela" ;
+    foaf:birthDate "1916-05-11"^^xsd:date ;
+    foaf:deathDate "2002-01-17"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Escritor español, premio Nobel de Literatura" .
+
+<http://ejemplo.org/autor/CarlosFuentes> a foaf:Person ;
+    foaf:name "Carlos Fuentes" ;
+    foaf:birthDate "1928-11-11"^^xsd:date ;
+    foaf:deathDate "2012-05-15"^^xsd:date ;
+    foaf:based_near "México" ;
+    dct:description "Escritor, intelectual y diplomático mexicano" .
+
+<http://ejemplo.org/autor/JorgeIsaacs> a foaf:Person ;
+    foaf:name "Jorge Isaacs" ;
+    foaf:birthDate "1837-04-01"^^xsd:date ;
+    foaf:deathDate "1895-04-17"^^xsd:date ;
+    foaf:based_near "Colombia" ;
+    dct:description "Escritor y político colombiano" .
+
+<http://ejemplo.org/autor/AlejoCarpentier> a foaf:Person ;
+    foaf:name "Alejo Carpentier" ;
+    foaf:birthDate "1904-12-26"^^xsd:date ;
+    foaf:deathDate "1980-04-24"^^xsd:date ;
+    foaf:based_near "Cuba" ;
+    dct:description "Escritor y musicólogo cubano" .
+
+<http://ejemplo.org/autor/FranzKafka> a foaf:Person ;
+    foaf:name "Franz Kafka" ;
+    foaf:birthDate "1883-07-03"^^xsd:date ;
+    foaf:deathDate "1924-06-03"^^xsd:date ;
+    foaf:based_near "República Checa" ;
+    dct:description "Escritor checo en lengua alemana" .
+
+<http://ejemplo.org/autor/RobertoBolano> a foaf:Person ;
+    foaf:name "Roberto Bolaño" ;
+    foaf:birthDate "1953-04-28"^^xsd:date ;
+    foaf:deathDate "2003-07-15"^^xsd:date ;
+    foaf:based_near "Chile" ;
+    dct:description "Escritor y poeta chileno" .
+
+<http://ejemplo.org/autor/MilanKundera> a foaf:Person ;
+    foaf:name "Milan Kundera" ;
+    foaf:birthDate "1929-04-01"^^xsd:date ;
+    foaf:based_near "República Checa" ;
+    dct:description "Escritor checo-francés" .
+
+<http://ejemplo.org/autor/AdolfoBioyCasares> a foaf:Person ;
+    foaf:name "Adolfo Bioy Casares" ;
+    foaf:birthDate "1914-09-15"^^xsd:date ;
+    foaf:deathDate "1999-03-08"^^xsd:date ;
+    foaf:based_near "Argentina" ;
+    dct:description "Escritor argentino" .
+
+<http://ejemplo.org/autor/IsabelAllende> a foaf:Person ;
+    foaf:name "Isabel Allende" ;
+    foaf:birthDate "1942-08-02"^^xsd:date ;
+    foaf:based_near "Chile" ;
+    dct:description "Escritora chilena" ;
+    foaf:mbox <mailto:iallende@example.org> .
+
+<http://ejemplo.org/autor/LauraEsquivel> a foaf:Person ;
+    foaf:name "Laura Esquivel" ;
+    foaf:birthDate "1950-09-30"^^xsd:date ;
+    foaf:based_near "México" ;
+    dct:description "Escritora mexicana" .
+
+<http://ejemplo.org/autor/LeónTolstói> a foaf:Person ;
+    foaf:name "León Tolstói" ;
+    foaf:birthDate "1828-09-09"^^xsd:date ;
+    foaf:deathDate "1910-11-20"^^xsd:date ;
+    foaf:based_near "Rusia" ;
+    dct:description "Escritor ruso" .
+
+<http://ejemplo.org/autor/OscarWilde> a foaf:Person ;
+    foaf:name "Oscar Wilde" ;
+    foaf:birthDate "1854-10-16"^^xsd:date ;
+    foaf:deathDate "1900-11-30"^^xsd:date ;
+    foaf:based_near "Irlanda" ;
+    dct:description "Escritor, poeta y dramaturgo irlandés" .
+
+<http://ejemplo.org/autor/AntoinedeSaintExupery> a foaf:Person ;
+    foaf:name "Antoine de Saint-Exupéry" ;
+    foaf:birthDate "1900-06-29"^^xsd:date ;
+    foaf:deathDate "1944-07-31"^^xsd:date ;
+    foaf:based_near "Francia" ;
+    dct:description "Escritor y aviador francés" .
+
+<http://ejemplo.org/autor/Homero> a foaf:Person ;
+    foaf:name "Homero" ;
+    dct:description "Poeta griego antiguo" .
+
+<http://ejemplo.org/autor/FedericoGarciaLorca> a foaf:Person ;
+    foaf:name "Federico García Lorca" ;
+    foaf:birthDate "1898-06-05"^^xsd:date ;
+    foaf:deathDate "1936-08-19"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Poeta y dramaturgo español" .
+
+<http://ejemplo.org/autor/MarioBenedetti> a foaf:Person ;
+    foaf:name "Mario Benedetti" ;
+    foaf:birthDate "1920-09-14"^^xsd:date ;
+    foaf:deathDate "2009-05-17"^^xsd:date ;
+    foaf:based_near "Uruguay" ;
+    dct:description "Escritor y poeta uruguayo" .
+
+<http://ejemplo.org/autor/JoséZorrilla> a foaf:Person ;
+    foaf:name "José Zorrilla" ;
+    foaf:birthDate "1817-02-21"^^xsd:date ;
+    foaf:deathDate "1893-01-23"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Poeta y dramaturgo español" .
+
+<http://ejemplo.org/autor/MigueldeCervantes> a foaf:Person ;
+    foaf:name "Miguel de Cervantes" ;
+    foaf:birthDate "1547-09-29"^^xsd:date ;
+    foaf:deathDate "1616-04-22"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Escritor español, autor de El Quijote" .
+
+<http://ejemplo.org/autor/JulioCortázar> a foaf:Person ;
+    foaf:name "Julio Cortázar" ;
+    foaf:birthDate "1914-08-26"^^xsd:date ;
+    foaf:deathDate "1984-02-12"^^xsd:date ;
+    foaf:based_near "Argentina" ;
+    dct:description "Escritor e intelectual argentino" .
+
+<http://ejemplo.org/autor/MarioVargasLlosa> a foaf:Person ;
+    foaf:name "Mario Vargas Llosa" ;
+    foaf:birthDate "1936-03-28"^^xsd:date ;
+    foaf:based_near "Perú" ;
+    dct:description "Escritor peruano, premio Nobel de Literatura" ;
+    foaf:mbox <mailto:mvargasllosa@example.org> .
+
+<http://ejemplo.org/autor/CarlosRuizZafón> a foaf:Person ;
+    foaf:name "Carlos Ruiz Zafón" ;
+    foaf:birthDate "1964-09-25"^^xsd:date ;
+    foaf:deathDate "2020-06-19"^^xsd:date ;
+    foaf:based_near "España" ;
+    dct:description "Escritor español" .
+
+# Libros con referencias a autores FOAF y metadatos adicionales
+<http://ejemplo.org/libro10> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/ErnestoSabato> ;
+    dc:title "El túnel" ;
+    dct:created "1948"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela psicológica" .
+
+<http://ejemplo.org/libro11> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JuanRulfo> ;
+    dc:title "Pedro Páramo" ;
+    dct:created "1955"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Realismo mágico" .
+
+<http://ejemplo.org/libro13> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/Anonimo> ;
+    dc:title "El lazarillo de Tormes" ;
+    dct:created "1554"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela picaresca" .
+
+<http://ejemplo.org/libro14> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "Crónica de una muerte anunciada" ;
+    dct:created "1981"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro15> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/ManueldeFalla> ;
+    dc:title "El amor brujo" ;
+    dct:created "1915"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Ópera" .
+
+<http://ejemplo.org/libro16> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JorgeLuisBorges> ;
+    dc:title "El Aleph" ;
+    dct:created "1949"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Cuentos" .
+
+<http://ejemplo.org/libro17> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/CamiloJoseCela> ;
+    dc:title "La colmena" ;
+    dct:created "1951"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela social" .
+
+<http://ejemplo.org/libro18> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JorgeLuisBorges> ;
+    dc:title "El jardín de los senderos que se bifurcan" ;
+    dct:created "1941"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Cuentos" .
+
+<http://ejemplo.org/libro19> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/CarlosFuentes> ;
+    dc:title "La muerte de Artemio Cruz" ;
+    dct:created "1962"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro20> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JorgeIsaacs> ;
+    dc:title "María" ;
+    dct:created "1867"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela romántica" .
+
+<http://ejemplo.org/libro21> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/AlejoCarpentier> ;
+    dc:title "Los pasos perdidos" ;
+    dct:created "1953"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro22> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "El general en su laberinto" ;
+    dct:created "1989"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela histórica" .
+
+<http://ejemplo.org/libro23> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/FranzKafka> ;
+    dc:title "La metamorfosis" ;
+    dct:created "1915"^^xsd:gYear ;
+    dct:language "de" ;
+    dct:subject "Novela corta" .
+
+<http://ejemplo.org/libro24> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/RobertoBolano> ;
+    dc:title "Los detectives salvajes" ;
+    dct:created "1998"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro25> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/MilanKundera> ;
+    dc:title "El libro de la risa y el olvido" ;
+    dct:created "1979"^^xsd:gYear ;
+    dct:language "cs" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro26> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/AdolfoBioyCasares> ;
+    dc:title "La invención de Morel" ;
+    dct:created "1940"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Ciencia ficción" .
+
+<http://ejemplo.org/libro27> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/IsabelAllende> ;
+    dc:title "La ciudad de las bestias" ;
+    dct:created "2002"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela juvenil" .
+
+<http://ejemplo.org/libro28> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "El coronel no tiene quien le escriba" ;
+    dct:created "1961"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela corta" .
+
+<http://ejemplo.org/libro29> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "El otoño del patriarca" ;
+    dct:created "1975"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro30> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/LauraEsquivel> ;
+    dc:title "Como agua para chocolate" ;
+    dct:created "1989"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela romántica" .
+
+<http://ejemplo.org/libro31> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "El amor en los tiempos del cólera" ;
+    dct:created "1985"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela romántica" .
+
+<http://ejemplo.org/libro32> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/LeónTolstói> ;
+    dc:title "La muerte de Iván Ilich" ;
+    dct:created "1886"^^xsd:gYear ;
+    dct:language "ru" ;
+    dct:subject "Novela filosófica" .
+
+<http://ejemplo.org/libro33> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/OscarWilde> ;
+    dc:title "El retrato de Dorian Gray" ;
+    dct:created "1890"^^xsd:gYear ;
+    dct:language "en" ;
+    dct:subject "Novela gótica" .
+
+<http://ejemplo.org/libro34> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/AntoinedeSaintExupery> ;
+    dc:title "El principito" ;
+    dct:created "1943"^^xsd:gYear ;
+    dct:language "fr" ;
+    dct:subject "Fábula" .
+
+<http://ejemplo.org/libro35> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/Homero> ;
+    dc:title "La Odisea" ;
+    dct:created "-800"^^xsd:gYear ;
+    dct:language "grc" ;
+    dct:subject "Poema épico" .
+
+<http://ejemplo.org/libro36> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/Homero> ;
+    dc:title "La Iliada" ;
+    dct:created "-800"^^xsd:gYear ;
+    dct:language "grc" ;
+    dct:subject "Poema épico" .
+
+<http://ejemplo.org/libro4> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/FedericoGarciaLorca> ;
+    dc:title "La casa de Bernarda Alba" ;
+    dct:created "1936"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Drama" .
+
+<http://ejemplo.org/libro42> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/MarioBenedetti> ;
+    dc:title "La tregua" ;
+    dct:created "1960"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro45> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JorgeLuisBorges> ;
+    dc:title "Ficciones" ;
+    dct:created "1944"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Cuentos" .
+
+<http://ejemplo.org/libro47> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JoséZorrilla> ;
+    dc:title "Don Juan Tenorio" ;
+    dct:created "1844"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Drama romántico" .
+
+<http://ejemplo.org/libro49> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/GabrielGarciaMarquez> ;
+    dc:title "Cien años de soledad" ;
+    dct:created "1967"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Realismo mágico" .
+
+<http://ejemplo.org/libro5> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/CarlosRuizZafón> ;
+    dc:title "La sombra del viento" ;
+    dct:created "2001"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro50> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/MigueldeCervantes> ;
+    dc:title "El Quijote" ;
+    dct:created "1605"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .
+
+<http://ejemplo.org/libro7> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/JulioCortázar> ;
+    dc:title "Rayuela" ;
+    dct:created "1963"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela experimental" .
+
+<http://ejemplo.org/libro9> a dct:BibliographicResource ;
+    dc:creator <http://ejemplo.org/autor/MarioVargasLlosa> ;
+    dc:title "La ciudad y los perros" ;
+    dct:created "1963"^^xsd:gYear ;
+    dct:language "es" ;
+    dct:subject "Novela" .

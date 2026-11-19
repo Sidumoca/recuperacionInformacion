@@ -115,8 +115,6 @@ def choose_language_value(elements, field):
 
 
 # Cada regla se aplica sobre el texto de los dc:subject.
-# Es deliberadamente explícita: si no reconocemos una titulación, no inventamos
-# una categoría. Las reglas se pueden ampliar al revisar el CSV de no clasificados.
 DEGREE_RULES = [
     ("Ciencias de la Salud", [
         "enfermer", "fisioter", "medicina", "odontolog", "veterin",
@@ -317,7 +315,7 @@ def create_model(vocab_size, sequence_length, number_of_classes):
 
 
 def train_and_evaluate(df, output_dir):
-    # Solo usamos las seis clases acordadas.
+    # Solo usamos las seis clases.
     df = df[df["Class"].isin(CATEGORIES)].copy()
 
     counts = df["Class"].value_counts()
@@ -325,7 +323,7 @@ def train_and_evaluate(df, output_dir):
     for category in CATEGORIES:
         print(f"  {category}: {int(counts.get(category, 0))}")
 
-    # La división estratificada necesita al menos dos ejemplos por clase.
+    # La división necesita al menos dos ejemplos por clase.
     usable_categories = [cat for cat in CATEGORIES if counts.get(cat, 0) >= 2]
     df = df[df["Class"].isin(usable_categories)].copy()
 
